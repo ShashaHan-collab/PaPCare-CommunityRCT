@@ -14,7 +14,7 @@ library(gridExtra)
 library(cowplot)
 library(ggpattern)
 
-
+# load data
 load('github/source_data_3a.RData')
 load('github/source_data_3b.RData')
 load('github/source_data_3c.RData')
@@ -42,7 +42,7 @@ radar <- function(summary_data) {
                               main="",
                               line.col=color[1],
                               lwd=lwd,
-                              radial.labels = NA,label.prop=c(1.2,1.2,1.1,1.2,1.2,1.1)) # 隐藏径向轴标签
+                              radial.labels = NA,label.prop=c(1.2,1.2,1.1,1.2,1.2,1.1)) 
   
   n_labels <- length(c(1, 2, 3, 4, 5, NA))
   angles <- rep(0,6) # Adjust angles
@@ -50,16 +50,13 @@ radar <- function(summary_data) {
     text_pos <-c(0,i-1)
     text(text_pos[2], text_pos[1], labels = c(1, 2, 3, 4, 5, NA)[i], col = "darkgray")
   }
-  # 获取最大半径
   max_radius <- 5
   
-  # 使用 lines() 函数画加粗的最外圈
   angles <- seq(0, 2 * pi, length.out = 100)
   x <- max_radius * cos(angles)
   y <- max_radius * sin(angles)
   
-  # 绘制加粗的圆
-  lines(x, y, lwd=2)  # 调整 lwd 以达到所需的粗细
+  lines(x, y, lwd=2)  
   
   plot_rt_soa6 <- radial.plot(ppp[2,], rp.type="p",
                               radial.pos=kl+angle_offset_factor,
@@ -138,8 +135,8 @@ radar <- function(summary_data) {
          lty=1, cex=0.8,pt.bg = "white", bty = "n" )
 }
 pdf("github/fig_3a.pdf", width = 6, height = 6)
-# 设置边距为零
-par(mar = c(0, 0, 0, 0))  # 下、左、上、右的边距全设置为 0
+
+par(mar = c(0, 0, 0, 0))  
 radar(summary_data_3a)
 dev.off()
 
@@ -174,21 +171,21 @@ bar<-function(D){
   if(unique(D$variable)=="recommended") xlabel<-'Recommendation'
   if(unique(D$variable)=="acceptable") xlabel<-'Acceptability'
   ggplot(D, aes(x = as.factor(value), y = counts, fill = Elearning)) +
-    geom_col(position = "dodge") +  # 堆叠柱状图
-    scale_x_discrete(labels = label) +  # 自定义x轴标签
+    geom_col(position = "dodge") +  
+    scale_x_discrete(labels = label) + 
     labs(
       x = xlabel, y = "No. of particpants", fill = "Elearning",
       title = "<span style='color:steelblue;'>Consultation-only</span> vs. <span style='color:gold;'>E-learning plus</span>"
     ) +
     #ylim(0, 300) +
     scale_fill_manual(values = c("TRUE" = "#FDD835", "FALSE" = "#1E88E5")) +
-    theme_minimal() +  # 简洁主题
-    theme(legend.position = "none",panel.grid.major = element_blank(), # 去除主网格线
-          panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5),  # 居中x轴标签
-          plot.title = element_markdown(hjust = 0.5, face = "bold")  # 渲染Markdown格式标题
-          #axis.line.x = element_line(color = "darkgray"), # 显示x轴线
-          # axis.line.y = element_line(color = "black"), # 显示y轴线
-          # axis.ticks = element_line(color = "black"), # 显示刻度线
+    theme_minimal() +  
+    theme(legend.position = "none",panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5),  
+          plot.title = element_markdown(hjust = 0.5, face = "bold")  
+          #axis.line.x = element_line(color = "darkgray"), 
+          # axis.line.y = element_line(color = "black"), 
+          # axis.ticks = element_line(color = "black"), 
           # axis.ticks.length = unit(0.25, "cm")
     )+
     #labs(title = "", x = "", y = '')+
@@ -218,16 +215,11 @@ ggsave("github/fig_3b.pdf", plot = p, width = 6, height = 9)
 
 gap<-function(summary_data){
   
-  # 自定义颜色
+
   custom_colors <- c('#5495CFFF', '#F5AF4DFF', '#DB4743FF', '#7C873EFF','#FEF4D5FF')
-  #custom_colors <- c('#26A7E1', '#13AF68', '#E95412', '#FFE009','#E274A9')
+  custom_patterns <- c("none", "circle")  
   
-  # 自定义图案
-  custom_patterns <- c("none", "circle")  # 不同的图案
-  
-  # 计算 x 轴分类的数量（确保 variable 是因子类型）
-  n_vars <- length(levels(summary_data$variable))  # 如果 variable 是字符型，改用 length(unique(summary_data$variable))
-  
+  n_vars <- length(levels(summary_data$variable))  
   p<-ggplot(summary_data, aes(x = variable, y = proportion, fill = variable, pattern = Elearning)) +
     geom_bar_pattern(
       stat = "identity",
@@ -239,11 +231,11 @@ gap<-function(summary_data){
       pattern_spacing = 0.02,
       pattern_key_scale_factor = 0.6
     ) +
-    # 添加仅在 x 数据范围内的水平虚线
+   
     geom_segment(
-      x = -0.02,          # 左边界（第一个分类左侧）
-      xend = n_vars + 0.49,  # 右边界（最后一个分类右侧）
-      y = 0.5,          # y 轴位置
+      x = -0.02,         
+      xend = n_vars + 0.49,  
+      y = 0.5,         
       yend = 0.5,
       linetype = "dashed",
       color = "gray",
@@ -284,4 +276,5 @@ gap<-function(summary_data){
 }
 pc<-gap(summary_data_3c)
 width=6
+
 ggsave(filename = "github/fig_3c.pdf", plot = pc, width = width, height =width)
