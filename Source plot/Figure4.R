@@ -89,16 +89,10 @@ gap<-function(dat,label){
       geom = "crossbar",
       width = 0.5,
     ) +
-    #geom_boxplot(width = 0.8, outlier.shape = NA, color = "black", position = position_dodge(width = 0.75)) +
-    #stat_summary(fun.data = boxplot_stats, geom = "text", position = position_dodge(width = 0.75), vjust = c(-1), size = 3.5, color = "black", hjust = 0.5) +
     scale_fill_manual(values = custom_colors) +
     theme_minimal() +
     theme(legend.position = "none",panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
-          #axis.line.x = element_line(color = "darkgray"), 
-          # axis.line.y = element_line(color = "black"), 
-          # axis.ticks = element_line(color = "black"), 
-          # axis.ticks.length = unit(0.25, "cm")
     )+
     labs(title = "", x = label, y = '')+
     scale_y_continuous(limits = c(-6,6),breaks = c(-4,-2,0,2,4)) +
@@ -121,7 +115,6 @@ gap<-function(dat,label){
 }
 gap2<-function(dat,label){
   data_long <- dat
-  # custom_colors <- c("#1b9e77", "#d95f02")
   size=1
   p<-ggplot(data_long, aes(x = as.factor(Elearning), y = value, fill = Elearning)) +
     geom_violin(trim = FALSE, adjust = 1.5,show.legend =F,colour = NA, alpha = 0.5) +
@@ -134,8 +127,6 @@ gap2<-function(dat,label){
       geom = "crossbar",
       width = 0.5,
     ) +
-    #geom_boxplot(width = 0.8, outlier.shape = NA, color = "black", position = position_dodge(width = 0.75)) +
-    #stat_summary(fun.data = boxplot_stats, geom = "text", position = position_dodge(width = 0.75), vjust = c(-1), size = 3.5, color = "black", hjust = 0.5) +
     scale_fill_manual(values = custom_colors) +
     theme_minimal() +
     theme(legend.position = "none",panel.grid.major = element_blank(), 
@@ -146,10 +137,7 @@ gap2<-function(dat,label){
           # axis.ticks.length = unit(0.25, "cm")
     )+
     labs(title = "", x = label, y = '')+
-    #scale_y_continuous(limits = c(-6,6),breaks = c(-4,-2,0,2,4)) +
-    #scale_x_discrete(labels = c("consultation\n only"))+
     geom_segment(aes(x =1, xend = 2, y = -Inf, yend = -Inf), color = "darkgray",size=size) +
-    #geom_segment(aes(y = -6, yend = 6, x = -Inf, xend = -Inf), color = "darkgray",size=size)+
     theme(
       axis.text.x =  element_blank(),
       axis.ticks.x = element_line(color = "darkgray"), 
@@ -159,7 +147,6 @@ gap2<-function(dat,label){
       axis.title.x = element_text(size = 15, color = "black", face = "bold"),
       axis.title.y = element_text(size = 15, color = "black", face = "bold"),
       plot.margin = unit(c(0, 0, 0, 0), "cm")
-      #axis.ticks.length = unit(0.25, "cm")
     )
   
   return(p)
@@ -198,7 +185,6 @@ pa <- pa +
 label_size =30
 empty_plot <- ggplot() + 
   theme_void()
-#p<-plot_grid(pc,pe,pd,pb,nrow=1)
 p1<-plot_grid(empty_plot,pa,empty_plot,pb,empty_plot,nrow=1,rel_widths = c(1,3,1,3,1))
 p2<-plot_grid(pe,pd,pc,nrow=1)
 p<-plot_grid(p1,p2,nrow = 2)
@@ -207,3 +193,4 @@ width=6
 
 
 ggsave(filename = "github/fig_4b.pdf", plot = p, width = 12, height =12)
+
