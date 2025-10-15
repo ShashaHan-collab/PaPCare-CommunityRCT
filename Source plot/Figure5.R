@@ -12,7 +12,8 @@ library(dplyr)
 library(reshape2)
 library(jsonlite)
 library(openxlsx)
-# 设置工作目录
+
+# load data
 load('github/source_data_5a.RData')
 load('github/source_data_5b.RData')
 radar <- function(summary_data) {
@@ -38,7 +39,7 @@ radar <- function(summary_data) {
                               main="",
                               line.col=color[1],
                               lwd=lwd,
-                              radial.labels = NA,label.prop=c(1.2,1.2,1.1,1.2,1.2,1.1)) # 隐藏径向轴标签
+                              radial.labels = NA,label.prop=c(1.2,1.2,1.1,1.2,1.2,1.1)) 
   
   n_labels <- length(c(1, 2, 3, 4, 5, NA))
   angles <- rep(0,6) # Adjust angles
@@ -46,16 +47,16 @@ radar <- function(summary_data) {
     text_pos <-c(0,i-1)
     text(text_pos[2], text_pos[1], labels = c(1, 2, 3, 4, 5, NA)[i], col = "darkgray")
   }
-  # 获取最大半径
+
   max_radius <- 5
   
-  # 使用 lines() 函数画加粗的最外圈
+
   angles <- seq(0, 2 * pi, length.out = 100)
   x <- max_radius * cos(angles)
   y <- max_radius * sin(angles)
   
-  # 绘制加粗的圆
-  lines(x, y, lwd=2)  # 调整 lwd 以达到所需的粗细
+
+  lines(x, y, lwd=2)  
   
   plot_rt_soa6 <- radial.plot(ppp[2,], rp.type="p",
                               radial.pos=kl+angle_offset_factor,
@@ -134,8 +135,8 @@ radar <- function(summary_data) {
          lty=1, cex=1,pt.bg = "white", bty = "n" )
 }
 pdf("github/figure_5a1.pdf", width = 6, height = 6)
-# 设置边距为零
-par(mar = c(0, 0, 0, 0))  # 下、左、上、右的边距全设置为 0
+
+par(mar = c(0, 0, 0, 0))  
 radar(summary_data_5a1)
 dev.off()
 
@@ -172,14 +173,12 @@ radar <- function(summary_data) {
   }
   max_radius <- 5
   
-  # 使用 lines() 函数画加粗的最外圈
+  
   angles <- seq(0, 2 * pi, length.out = 100)
   x <- max_radius * cos(angles)
   y <- max_radius * sin(angles)
   
-  # 绘制加粗的圆
-  lines(x, y, lwd=2)  # 调整 lwd 以达到所需的粗细
-  
+  lines(x, y, lwd=2) 
   
   # Generating standard error values for y
   error_ppp_y <- matrix(summary_data$se, nrow=2, ncol=6)
@@ -243,16 +242,15 @@ radar <- function(summary_data) {
   
 }
 pdf("github/figure_5a2.pdf", width = 6, height = 6)
-# 设置边距为零
-par(mar = c(0, 0, 0, 0))  # 下、左、上、右的边距全设置为 0
+par(mar = c(0, 0, 0, 0))  
 radar(summary_data_5a2)
 dev.off()
 
 group_colors<-c("#B54764","#A8CBDF","#bca480",'#b0a5b8')
 p<-ggplot(dat_extracted, aes(x = variable, y = mean, fill = group)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.9), alpha = 0.7) + # 调整位置参数
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), alpha = 0.7) 
   geom_errorbar(aes(ymin = mean - 0.5 * sd, ymax = mean + 0.5 * sd), alpha = 0.7,
-                width = 0, linewidth = 0.7, position = position_dodge(width = 0.9)) + # 同步位置调整
+                width = 0, linewidth = 0.7, position = position_dodge(width = 0.9)) 
   labs(title = "",
        x = "",
        y = "Likert scale of score") +
@@ -273,4 +271,5 @@ p<-ggplot(dat_extracted, aes(x = variable, y = mean, fill = group)) +
         axis.text.x = element_text(size = 16, margin = margin(t = -10))
   )
 ggsave(filename = "github/figure_5b.pdf", plot = p, width = 15, height = 6)
+
 
