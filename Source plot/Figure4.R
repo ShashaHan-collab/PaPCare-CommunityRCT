@@ -12,6 +12,8 @@ library(cowplot)
 library(grid)
 library(ggtext)
 library(gridExtra)
+
+# load data
 load('github/source_data_4a.RData')
 load('github/source_data_4b.RData')
 colors <-c('#a7b9d7','#576fa0','#fadcb4','#e3b871','#dea3a2','#b57979','#cfcece','#9f9f9f')
@@ -22,11 +24,11 @@ fig4<-function(data,group_colors){
   if("Female" %in% unique(data$group)){ data$group=factor(data$group,levels = c('Male','Female'))}
   size=1
   data$Metric <- factor(data$Metric, levels =  c("Awareness", "Attention","Listenability", "Conciseness", "Integrity", "Empathy"))
-  # 绘制柱状图
+
   p<-ggplot(data, aes(x = Metric, y = Mean_Difference, fill = group)) +
-    geom_bar(stat = "identity", position = position_dodge(width = 0.7)) + # 调整 width 使柱子部分重叠
+    geom_bar(stat = "identity", position = position_dodge(width = 0.7)) + 
     geom_errorbar(aes(ymin = Mean_Difference - SD_Difference, ymax = Mean_Difference + SD_Difference),
-                  width = 0, linewidth = 0.7, position = position_dodge(width = 0.7)) + # 误差条与柱子对齐
+                  width = 0, linewidth = 0.7, position = position_dodge(width = 0.7)) + 
     labs(title = "",
          x = "",
          y = "") +
@@ -37,24 +39,24 @@ fig4<-function(data,group_colors){
     theme(legend.position = c(0.8, 0.8),
           legend.title = element_blank(),
           legend.text = element_text(size = 15),
-          panel.grid.major = element_blank(), # 去除主网格线
+          panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
           axis.ticks.y = element_line(color = "darkgray"), 
           axis.title.y = element_text(size = 20, color = "black", face = "bold"),
           axis.ticks.length = unit(0.25, "cm"),
           axis.text.y = element_text(size = 18))
   if("Single" %in% unique(data$group)){
-    p<-p+ # 使用自定义颜色
+    p<-p+ 
       theme(
         plot.margin = unit(c(0, 0, 0, 0), "cm"),
-        axis.text.x = element_text(angle = 45, hjust = 1, size = 16, margin = margin(t = -10)), # 调整 margin 使文字离 x 轴更近
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 16, margin = margin(t = -10)), 
         
       )
   }else{
-    p<-p+ # 使用自定义颜色
+    p<-p+ 
       theme(
         plot.margin = unit(c(0, 0, 0, 0), "cm"),
-        axis.text.x = element_blank()# 调整 margin 使文字离 x 轴更
+        axis.text.x = element_blank()
       )
   }
   
@@ -91,11 +93,11 @@ gap<-function(dat,label){
     #stat_summary(fun.data = boxplot_stats, geom = "text", position = position_dodge(width = 0.75), vjust = c(-1), size = 3.5, color = "black", hjust = 0.5) +
     scale_fill_manual(values = custom_colors) +
     theme_minimal() +
-    theme(legend.position = "none",panel.grid.major = element_blank(), # 去除主网格线
+    theme(legend.position = "none",panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
-          #axis.line.x = element_line(color = "darkgray"), # 显示x轴线
-          # axis.line.y = element_line(color = "black"), # 显示y轴线
-          # axis.ticks = element_line(color = "black"), # 显示刻度线
+          #axis.line.x = element_line(color = "darkgray"), 
+          # axis.line.y = element_line(color = "black"), 
+          # axis.ticks = element_line(color = "black"), 
           # axis.ticks.length = unit(0.25, "cm")
     )+
     labs(title = "", x = label, y = '')+
@@ -136,11 +138,11 @@ gap2<-function(dat,label){
     #stat_summary(fun.data = boxplot_stats, geom = "text", position = position_dodge(width = 0.75), vjust = c(-1), size = 3.5, color = "black", hjust = 0.5) +
     scale_fill_manual(values = custom_colors) +
     theme_minimal() +
-    theme(legend.position = "none",panel.grid.major = element_blank(), # 去除主网格线
+    theme(legend.position = "none",panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
-          #axis.line.x = element_line(color = "darkgray"), # 显示x轴线
-          # axis.line.y = element_line(color = "black"), # 显示y轴线
-          # axis.ticks = element_line(color = "black"), # 显示刻度线
+          #axis.line.x = element_line(color = "darkgray"), 
+          # axis.line.y = element_line(color = "black"), 
+          # axis.ticks = element_line(color = "black"), 
           # axis.ticks.length = unit(0.25, "cm")
     )+
     labs(title = "", x = label, y = '')+
@@ -200,7 +202,8 @@ empty_plot <- ggplot() +
 p1<-plot_grid(empty_plot,pa,empty_plot,pb,empty_plot,nrow=1,rel_widths = c(1,3,1,3,1))
 p2<-plot_grid(pe,pd,pc,nrow=1)
 p<-plot_grid(p1,p2,nrow = 2)
-# 空白主题
+
 width=6
+
 
 ggsave(filename = "github/fig_4b.pdf", plot = p, width = 12, height =12)
