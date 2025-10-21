@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17330614.svg)]
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17330614.svg)](https://doi.org/10.5281/zenodo.17330614)
 
 # PaPCare-CommunityRCT
 This repository contains the code classification analysis and data visualization for the paper: Li, S., Li, Y., Zhou, S. et al. Co-designing LLM-powered primary care: A randomized controlled trial. Working paper (2025). 
