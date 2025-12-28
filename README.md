@@ -3,7 +3,7 @@
 # PaPCare-CommunityRCT
 This repository contains the code classification analysis and data visualization for the paper: Li, S., Li, Y., Zhou, S. et al. A community-codesigned LLM-powered chatbot for primary care: a randomized controlled trial. Nature Health. Forthcoming (2026). 
 
-For behind the paper: https://communities.springernature.com/manage/posts/298529
+Behind the paper: https://communities.springernature.com/manage/posts/298529
 
 # Prerequisites
 ## Prerequisite software 
