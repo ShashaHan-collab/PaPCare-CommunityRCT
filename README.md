@@ -1,9 +1,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17404521.svg)](https://doi.org/10.5281/zenodo.17404521)
 
 # PaPCare-CommunityRCT
-This repository contains the code classification analysis and data visualization for the paper: Li, S., Li, Y., Zhou, S. et al. A community-codesigned LLM-powered chatbot for primary care: a randomized controlled trial. Nature Health. Published online January 19th (2026). 
+This repository contains the code classification analysis and data visualization for the paper: Li, S., Li, Y., Zhou, S. et al. A community-codesigned LLM-powered chatbot for primary care: a randomized controlled trial. Nat Health (2026). https://doi.org/10.1038/s44360-025-00021-w. 
 
-Behind the paper: Building a primary care chatbot with people, not for them. https://communities.springernature.com/manage/posts/298529
+Behind the paper: Building a primary care chatbot with people, not for them. https://communities.springernature.com/posts/298529
 
 # Prerequisites
 ## Prerequisite software 
